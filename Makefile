@@ -1,7 +1,10 @@
-all: unisay names quotes
+all: unisay ponysay names quotes
 
 unisay:
 	git clone "https://github.com/maandree/unisay.git" "unisay"
+
+ponysay:
+	git clone "https://github.com/erkin/ponysay.git" "ponysay"
 
 names:
 	mv "./unisay/share-src/unisay/ponyquotes/ponies" "./unisay/share-src/unisay/ponyquotes/ponies~"
@@ -9,6 +12,8 @@ names:
 	./sed-gen.sh
 	chmod 755 "./sed.sh"
 	./sed.sh
+	chmod 755 "./addln.sh"
+	./addln.sh
 
 quotes:
 	(cd "./unisay" ; make -B ponyquotes)
@@ -16,5 +21,7 @@ quotes:
 
 clean:
 	yes | rm -r "./unisay/" || echo -n
-	yes | rm -r "./ponyquotes/" || echo -n
+	yes | rm -r "./ponysay/" || echo -n
+	rm -r "./ponyquotes/" || echo -n
 	rm "./sed.sh" || echo -n
+
