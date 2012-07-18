@@ -26,8 +26,8 @@ edit:
 install:
 	install -d "$(DESTDIR)/usr/bin"
 	install -d "$(DESTDIR)/usr/share/ponyquotes4ponysay"
-	install -m 755 "pq4ps" "$(DESTDIR)/usr/bin/pq4ps"
-	install -m 755 "pq4ps.pl" "$(DESTDIR)/usr/bin/pq4ps.pl"
+	install -m 755 "pq4ps.install" "$(DESTDIR)/usr/bin/pq4ps"
+	install -m 755 "pq4ps.pl.install" "$(DESTDIR)/usr/bin/pq4ps.pl"
 	install -m 755 "pq4ps-list" "$(DESTDIR)/usr/bin/pq4ps-list"
 	install -m 755 "pq4ps-list.pl" "$(DESTDIR)/usr/bin/pq4ps-list.pl"
 	install -m 644 ponyquotes/* "$(DESTDIR)/usr/share/ponyquotes4ponysay"
@@ -38,6 +38,7 @@ uninstall:
 	unlink "$(DESTDIR)/usr/bin/pq4ps-list"
 	unlink "$(DESTDIR)/usr/bin/pq4ps-list.pl"
 	rm -r "$(DESTDIR)/usr/share/ponyquotes4ponysay"
+
 clean:
 	yes | rm -r "./unisay/" || echo -n
 	yes | rm -r "./ponysay/" || echo -n
