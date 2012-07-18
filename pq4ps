@@ -6,7 +6,7 @@ ponies=()
 if [[ ! $# == 0 ]]; then
     p=""
     for arg in "$@"; do
-	p=$p$(echo "$_ponies" | grep "^$arg@")
+	p=$p$(echo "$_ponies" | grep "^$arg@")" "
     done
     _ponies=$p
 fi
@@ -17,4 +17,9 @@ done
 
 pony="${ponies[$RANDOM%${#ponies[@]}]}"
 
-echo "-f" $(echo $pony | cut -d @ -f 1) "$(cat ./ponyquotes/$(echo $pony | cut -d @ -f 2))"
+p=$(echo $pony | cut -d '@' -f 1)
+f=$(echo $pony | cut -d '@' -f 2)
+q=$(cat ./ponyquotes/$f)
+
+echo "-f" $p $q
+

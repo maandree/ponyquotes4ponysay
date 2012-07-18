@@ -1,6 +1,5 @@
 #!/usr/bin/perl
 
-
 opendir(DIR, "/usr/share/ponysay/ponies/");
 @files = readdir(DIR); 
 
