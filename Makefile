@@ -1,4 +1,4 @@
-all: unisay ponysay names quotes
+all: unisay ponysay names quotes edit
 
 unisay:
 	git clone "https://github.com/maandree/unisay.git" "unisay"
@@ -19,9 +19,26 @@ quotes:
 	(cd "./unisay" ; make -B ponyquotes)
 	mv "./unisay/share/unisay/ponyquotes/" "."
 
+edit:
+	sed -e 's/.\//\/usr\/share\/ponyquotes4ponysay\//g' < "./pq4ps" > "./pq4ps.install"
+	sed -e 's/.\//\/usr\/share\/ponyquotes4ponysay\//g' < "./pq4ps.pl" > "./pq4ps.pl.install"
+
+install:
+	install -d "$(DESTDIR)/usr/bin"
+	install -d "$(DESTDIR)/usr/share/ponyquotes4ponysay"
+	install -m 755 "pq4ps" "$(DESTDIR)/usr/bin/pq4ps"
+	install -m 755 "pq4ps.pl" "$(DESTDIR)/usr/bin/pq4ps.pl"
+	install -m 644 ponyquotes/* "$(DESTDIR)/usr/share/ponyquotes4ponysay"
+
+uninstall:
+	unlink "$(DESTDIR)/usr/bin/pq4ps"
+	unlink "$(DESTDIR)/usr/bin/pq4ps.pl"
+	rm -r "$(DESTDIR)/usr/share/ponyquotes4ponysay"
 clean:
 	yes | rm -r "./unisay/" || echo -n
 	yes | rm -r "./ponysay/" || echo -n
 	rm -r "./ponyquotes/" || echo -n
 	rm "./sed.sh" || echo -n
+	rm "./pq4ps.install" || echo -n
+	rm "./pq4ps.pl.install" || echo -n
 
