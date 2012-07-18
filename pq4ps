@@ -15,11 +15,21 @@ for _pony in $_ponies; do
     ponies+=( $_pony )
 done
 
-pony="${ponies[$RANDOM%${#ponies[@]}]}"
-
-p=$(echo $pony | cut -d '@' -f 1)
-f=$(echo $pony | cut -d '@' -f 2)
-q=$(cat ./ponyquotes/$f)
-
-echo "-f" $p $q
+if [[ ${#ponies[@]} == 0 ]]; then
+    ponies=()
+    for arg in "$@"; do
+	ponies+=( "$arg" )
+    done
+    p="${ponies[$RANDOM%${#ponies[@]}]}"
+    q='I am totally speechless'
+    echo "-f" $p $q
+else
+    pony="${ponies[$RANDOM%${#ponies[@]}]}"
+    
+    p=$(echo $pony | cut -d '@' -f 1)
+    f=$(echo $pony | cut -d '@' -f 2)
+    q=$(cat ./ponyquotes/$f)
+    
+    echo "-f" $p $q
+fi
 
