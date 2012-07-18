@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-print "sed";
+print "(sed";
 
 foreach $arg (@ARGV)
 {
@@ -13,3 +13,12 @@ foreach $arg (@ARGV)
     print " -e 's/^$arg\$/\e[1m$arg\e[21m/g'";
 }
 
+print " | sed";
+
+foreach $arg (@ARGV)
+{
+    print " -e 's/ $arg)/ \e[1m$arg\e[21m)/g'";
+    print " -e 's/ $arg\$/ \e[1m$arg\e[21m/g'"
+}
+
+print ")";
