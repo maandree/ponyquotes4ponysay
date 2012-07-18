@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_ponies="$(perl ./pq4ps.pl)"
+_ponies="$(perl $0.pl)"
 ponies=()
 
 if [[ ! $# == 0 ]]; then
