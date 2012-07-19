@@ -21,6 +21,7 @@ version() {
 scrw=`(stty size <&2 || echo 0 0) | cut -d ' ' -f 2`
 listcmd="$0list.pl"
 
+haspq=1
 if [[ -f './pq4ps-list' ]]; then
     function qlist
     {   ./pq4ps-list
@@ -30,6 +31,7 @@ elif [[ -f '/usr/bin/pq4ps-list' ]]; then
     {   /usr/bin/pq4ps-list
     }
 else
+    haspq=0
     function qlist
     {   cat
     }
@@ -154,6 +156,13 @@ Options:
   -h          Show this help and exit.
   -l          List pony files.
   -L          List pony files with synonyms inside brackets.
+EOF
+if [[ $haspq = 1 ]]; then
+    cat <<EOF
+  -q          Use the pony quote feature.
+EOF
+fi
+cat <<EOF
   -f[name]    Select a pony (either a file name or a pony name.)
   -W[column]  The screen column where the message should be wrapped.
 
@@ -213,7 +222,12 @@ say() {
 
 ponies=()
 
-while getopts f:W:Llhv OPT
+opts="f:W:Llhv"
+if [[ $haspq ]]; then
+    opts=$opts"q"
+fi
+usepq=0
+while getopts $opts OPT
 do
     case ${OPT} in
         v)  version; exit ;;
@@ -222,10 +236,25 @@ do
 	l)  list; exit ;;
 	L)  linklist; exit ;;
         W)  wrap="$OPTARG" ;;
+	q)  usepq=1 ;;
         \?) usage >&2; exit 1 ;;
     esac
 done
 shift $((OPTIND - 1))
+
+if [[ $usepq = 1 ]]; then
+    if [[ -f './pq4ps' ]]; then
+	function q
+	{   ./pq4ps $@
+	}
+    elif [[ -f '/usr/bin/pq4ps' ]]; then
+	function q
+	{   /usr/bin/pq4ps $@
+	}
+    fi
+    $0 ${wrap:+-W$wrap} $(q "$*")
+    exit
+fi
 
 hash $cmd &>/dev/null; if [ $? -ne 0 ]; then
     cat >&2 <<EOF
