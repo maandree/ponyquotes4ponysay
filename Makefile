@@ -20,8 +20,8 @@ quotes:
 	mv "./unisay/share/unisay/ponyquotes/" "."
 
 edit:
-	sed -e 's/.\//\/usr\/share\/ponyquotes4ponysay\//g' < "./pq4ps" > "./pq4ps.install"
-	sed -e 's/.\//\/usr\/share\/ponyquotes4ponysay\//g' < "./pq4ps.pl" > "./pq4ps.pl.install"
+	sed -e 's/\.\/ponyquotes\//\/usr\/share\/ponyquotes4ponysay\//g' < "./pq4ps" > "./pq4ps.install"
+	sed -e 's/\.\/ponyquotes\//\/usr\/share\/ponyquotes4ponysay\//g' < "./pq4ps.pl" > "./pq4ps.pl.install"
 
 install:
 	install -d "$(DESTDIR)/usr/bin"
