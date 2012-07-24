@@ -4,7 +4,7 @@ unisay:
 	git clone "https://github.com/maandree/unisay.git" "unisay"
 
 ponysay:
-	git clone "https://github.com/erkin/ponysay.git" "ponysay"
+	tmp="$$(dirname "`pwd`")"; tmp="$${tmp##*/}"; if [[ "$$tmp" = "ponysay" ]]; then ln -s ../ ponysay; else git clone "https://github.com/erkin/ponysay.git" "ponysay"; fi
 
 names:
 	mv "./unisay/share-src/unisay/ponyquotes/ponies" "./unisay/share-src/unisay/ponyquotes/ponies~"
@@ -41,7 +41,7 @@ uninstall:
 
 clean:
 	yes | rm -r "./unisay/" || echo -n
-	yes | rm -r "./ponysay/" || echo -n
+	(yes | rm -r "./ponysay/") || rm "./ponysay" || echo -n
 	rm -r "./ponyquotes/" || echo -n
 	rm "./sed.sh" || echo -n
 	rm "./pq4ps.install" || echo -n
